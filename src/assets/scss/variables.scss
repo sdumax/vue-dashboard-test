@@ -1,0 +1,66 @@
+:root {
+  // COLORS
+  --primary-color: #1b59f8;
+  --secondary-color: #1b59f81a;
+  --danger-color: #e51837;
+  --success-color: #1fe08f;
+  --light-color: #f9f9f9;
+  --dark-color: #000000b2;
+  --white-color: #fff;
+  --black-color: #000;
+  --gray-color: #00000017;
+  --hr-color: #0000001a;
+  --text-dark-color: #4d4d4d;
+  --text-gray-color: #00000080;
+  // BREAKPOINTS
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+
+  // FONT FAMILY
+  --font-family-sans-serif: 'Inter', sans-serif;
+  // BORDER
+  --border-width: 1px;
+  --border-color: #eff0f6;
+  --border-radius: 1rem;
+  --border-radius-lg: 1.25rem;
+  --border-radius-sm: 0.2rem;
+
+  // TRANSITION
+  --transition-base: all 0.35s ease-in-out;
+  --transition-fade: opacity 0.35s linear;
+
+  // BOX SHADOW
+  --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+
+  // TRANSITION
+  --transition: all 0.15s ease-in-out;
+  --transition-transform: transform 0.15s ease-in-out;
+  --transition-height: height 0.15s ease-in-out;
+  --transition-width: width 0.15s ease-in-out;
+  --transition-opacity: opacity 0.15s ease-in-out;
+
+  // FONT SIZE
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.75rem;
+  --font-size-h4: 1.5rem;
+  --font-size-h5: 1.25rem;
+  --font-size-h6: 1rem;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
+
+  // FONT WEIGHT
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 500;
+  --font-weight-dark: 700;
+
+  // LINE HEIGHT
+  --line-height-base: 1.5;
+  --line-height-lg: 1.6;
+  --line-height-sm: 1.2;
+}
