@@ -89,14 +89,15 @@ const menu: MenuItem[] = [
   box-shadow: var(--box-shadow);
   height: 100%;
   width: 220px;
-  padding: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
 
   .logo {
     display: flex;
     justify-content: start;
     align-items: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding-left: 20px;
 
     img {

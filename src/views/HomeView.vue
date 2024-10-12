@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import WidgetCard from '@/components/WidgetCard.vue'
 </script>
 
 <template>
   <main>
-    <!-- <TheWelcome /> -->
+    <widget-card width="158px" height="140px"> de </widget-card>
   </main>
 </template>
