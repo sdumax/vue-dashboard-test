@@ -8,13 +8,20 @@
     role="combobox"
     :aria-expanded="isOpen"
     aria-haspopup="listbox"
+    ref="select"
   >
     <div
       class="v-select__selected"
       @click="toggleDropdown"
       :aria-activedescendant="selectedOption ? `option-${selectedOption.value}` : ''"
     >
-      {{ selectedOption ? selectedOption.label : placeholder }}
+      <div class="v-select__selected-text">
+        {{ selectedOption ? selectedOption.label : '' }}
+        <template v-if="!selectedOption">
+          <slot name="placeholder">{{ placeholder }}</slot>
+        </template>
+        <icon-caret-down />
+      </div>
     </div>
     <ul v-if="isOpen" class="v-select__dropdown" role="listbox">
       <li
@@ -46,71 +53,55 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
+import IconCaretDown from '@/components/icons/IconCaretDown.vue';
+import { useDropdown } from '@/composables/useDropdown';
+import { useKeyboardNavigation } from '@/composables/useKeyboardNavigation';
 
 interface Option {
-  label: string
-  value: string | number
+  label: string;
+  value: string | number;
 }
 
 const props = defineProps({
   options: {
     type: Array as () => Option[],
     required: true,
-    default: () => []
+    default: () => [],
   },
   modelValue: {
     type: [String, Number],
-    default: null
+    default: null,
   },
   placeholder: {
     type: String,
-    default: 'Select an option'
-  }
-})
+    default: 'Select an option',
+  },
+});
 
-const isOpen = ref(false)
-const selectedOption = ref<Option | null>(null)
+const selectedOption = ref<Option | null>(null);
+const select = ref<HTMLElement | null>(null);
 
-const toggleDropdown = () => {
-  isOpen.value = !isOpen.value
-}
+const { isOpen, toggleDropdown } = useDropdown(select);
+const { navigateUp, navigateDown } = useKeyboardNavigation(props.options, selectedOption);
 
 const selectOption = (option: Option) => {
-  isOpen.value = false
-  selectedOption.value = option
-}
+  selectedOption.value = option;
+  isOpen.value = false;
+};
 
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' || event.key === ' ') {
-    toggleDropdown()
+    toggleDropdown();
   }
 
   if (event.key === 'Escape') {
-    isOpen.value = false
+    isOpen.value = false;
   }
-}
-
-const navigateUp = () => {
-  const currentIndex = props.options.findIndex(
-    (option) => option.value === selectedOption.value?.value
-  )
-  if (currentIndex > 0) {
-    selectedOption.value = props.options[currentIndex - 1]
-  }
-}
-
-const navigateDown = () => {
-  const currentIndex = props.options.findIndex(
-    (option) => option.value === selectedOption.value?.value
-  )
-  if (currentIndex < props.options.length - 1) {
-    selectedOption.value = props.options[currentIndex + 1]
-  }
-}
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .v-select {
   --v-select-bg: #fff;
   --v-select-border-color: #eff0f6;
@@ -147,6 +138,12 @@ const navigateDown = () => {
 
   &__selected {
     padding: 10px;
+
+    &-text {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr 24px;
+    }
   }
 
   &__dropdown {
@@ -173,6 +170,7 @@ const navigateDown = () => {
     cursor: pointer;
     transition: background-color var(--v-select-transition);
     margin: 0;
+    max-width: max-content;
 
     &:hover,
     &--selected {
