@@ -88,7 +88,6 @@ const menu: MenuItem[] = [
   border-bottom-right-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   height: 100%;
-  width: 220px;
   padding-left: 40px;
   padding-right: 40px;
 
