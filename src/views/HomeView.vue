@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import VSelect from '@/components/ui/VSelect.vue'
 import WidgetCard from '@/components/WidgetCard.vue'
+import VProgressBar from '@/components/ui/VProgressBar.vue'
 
 const filters = ref([
   {
@@ -83,18 +84,21 @@ const metrics = ref([
       </v-select>
     </div>
     <section class="widget-section">
-      <div class="metrics-widget">
-        <widget-card
-          v-for="metric in metrics"
-          :key="metric.title"
-          :width="metric.hasChart ? '100%' : '158px'"
-          :height="metric.hasChart ? '140px' : '100px'"
-        >
-          <div>
-            <h6>{{ metric.title }}</h6>
-            <p>{{ metric.value }}</p>
-          </div>
-        </widget-card>
+      <div class="widget-row">
+        <div class="metrics-widget">
+          <widget-card v-for="metric in metrics" :key="metric.title" width="158px" height="100px">
+            <div>
+              <h6>{{ metric.title }}</h6>
+              <p>{{ metric.value }}</p>
+            </div>
+          </widget-card>
+        </div>
+        <div class="chart">
+          <widget-card height="auto" width="auto">
+            <div>Chart</div>
+            <v-progress-bar label="Demo lab" width="20%" />
+          </widget-card>
+        </div>
       </div>
     </section>
   </div>
@@ -102,9 +106,32 @@ const metrics = ref([
 
 <style lang="scss">
 .filters {
-  --v-select-width: 100%;
+  .v-select {
+    --v-select-width: 100%;
+  }
   display: flex;
   gap: 20px;
   width: 100%;
+  margin-bottom: 24px;
+}
+.widget-section {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  .widget-row {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+  }
+  .chart {
+    width: 100%;
+  }
+  .metrics-widget {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 140px);
+    height: 100%;
+    gap: 20px;
+  }
 }
 </style>
