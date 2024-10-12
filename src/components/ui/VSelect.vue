@@ -16,10 +16,12 @@
       :aria-activedescendant="selectedOption ? `option-${selectedOption.value}` : ''"
     >
       <div class="v-select__selected-text">
-        {{ selectedOption ? selectedOption.label : '' }}
         <template v-if="!selectedOption">
           <slot name="placeholder">{{ placeholder }}</slot>
         </template>
+        <slot v-else name="selected" :selected-option="selectedOption" :placeholder="placeholder">
+          {{ selectedOption ? selectedOption.label : '' }}
+        </slot>
         <icon-caret-down />
       </div>
     </div>
@@ -53,52 +55,65 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import IconCaretDown from '@/components/icons/IconCaretDown.vue';
-import { useDropdown } from '@/composables/useDropdown';
-import { useKeyboardNavigation } from '@/composables/useKeyboardNavigation';
+import { ref, onMounted } from 'vue'
+import IconCaretDown from '@/components/icons/IconCaretDown.vue'
+import { useDropdown } from '@/composables/useDropdown'
+import { useKeyboardNavigation } from '@/composables/useKeyboardNavigation'
 
 interface Option {
-  label: string;
-  value: string | number;
+  label: string
+  value: string | number
 }
 
 const props = defineProps({
   options: {
     type: Array as () => Option[],
     required: true,
-    default: () => [],
+    default: () => []
   },
   modelValue: {
     type: [String, Number],
-    default: null,
+    default: null
   },
   placeholder: {
     type: String,
-    default: 'Select an option',
+    default: 'Select an option'
   },
-});
+  defaultSelected: {
+    type: [String, Number],
+    default: null
+  }
+})
 
-const selectedOption = ref<Option | null>(null);
-const select = ref<HTMLElement | null>(null);
+const selectedOption = ref<Option | null>(null)
+const select = ref<HTMLElement | null>(null)
 
-const { isOpen, toggleDropdown } = useDropdown(select);
-const { navigateUp, navigateDown } = useKeyboardNavigation(props.options, selectedOption);
+const { isOpen, toggleDropdown } = useDropdown(select)
+const { navigateUp, navigateDown } = useKeyboardNavigation(props.options, selectedOption)
 
 const selectOption = (option: Option) => {
-  selectedOption.value = option;
-  isOpen.value = false;
-};
+  selectedOption.value = option
+  isOpen.value = false
+}
 
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' || event.key === ' ') {
-    toggleDropdown();
+    toggleDropdown()
   }
 
   if (event.key === 'Escape') {
-    isOpen.value = false;
+    isOpen.value = false
   }
-};
+}
+
+onMounted(() => {
+  if (props.defaultSelected !== null) {
+    const defaultOption = props.options.find((option) => option.value === props.defaultSelected)
+    if (defaultOption) {
+      selectedOption.value = defaultOption
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -121,9 +136,11 @@ const handleKeydown = (event: KeyboardEvent) => {
   --v-select-dropdown-border-radius: 4px;
   --v-select-dropdown-max-height: 200px;
 
+  --v-select-width: 100%;
+
   position: relative;
-  display: inline-block;
-  width: 200px;
+  display: block;
+  width: var(--v-select-width);
   border: var(--v-select-border);
   border-radius: var(--v-select-radius);
   background-color: var(--v-select-bg);
@@ -163,6 +180,7 @@ const handleKeydown = (event: KeyboardEvent) => {
     margin: 0;
     padding: 0;
     margin-top: 5px;
+    overflow-x: hidden;
   }
 
   &__option {
@@ -170,7 +188,7 @@ const handleKeydown = (event: KeyboardEvent) => {
     cursor: pointer;
     transition: background-color var(--v-select-transition);
     margin: 0;
-    max-width: max-content;
+    width: 100%;
 
     &:hover,
     &--selected {
