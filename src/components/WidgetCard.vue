@@ -1,5 +1,7 @@
 <template>
-  <div class="widget"></div>
+  <div class="widget">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,6 +16,7 @@ defineProps<WidgetCardProps>()
 <style scoped lang="scss">
 .widget {
   background: var(--white-color);
+  color: var(--black-color);
   border-radius: 18px;
   box-shadow: var(--box-shadow);
   padding: 20px;

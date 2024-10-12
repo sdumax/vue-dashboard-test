@@ -136,7 +136,7 @@ onMounted(() => {
   --v-select-dropdown-border-radius: 4px;
   --v-select-dropdown-max-height: 200px;
 
-  --v-select-width: 100%;
+  --v-select-width: 280px;
 
   position: relative;
   display: block;

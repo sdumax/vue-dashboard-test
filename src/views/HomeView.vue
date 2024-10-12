@@ -33,6 +33,36 @@ const filters = ref([
     ]
   }
 ])
+
+const metrics = ref([
+  {
+    title: 'Active Users',
+    value: '27/80'
+  },
+  {
+    title: 'Questions Answered',
+    value: '3,298'
+  },
+  {
+    title: 'Avg. Session Length',
+    value: '2m 34s'
+  },
+  {
+    title: 'Starting Knowledge',
+    value: '64%',
+    hasChart: true
+  },
+  {
+    title: 'Current Knowledge',
+    value: '86%',
+    hasChart: true
+  },
+  {
+    title: 'Knowledge Gain',
+    value: '+34%',
+    hasChart: true
+  }
+])
 </script>
 
 <template>
@@ -52,7 +82,21 @@ const filters = ref([
         </template>
       </v-select>
     </div>
-    <widget-card width="158px" height="140px"> de </widget-card>
+    <section class="widget-section">
+      <div class="metrics-widget">
+        <widget-card
+          v-for="metric in metrics"
+          :key="metric.title"
+          :width="metric.hasChart ? '100%' : '158px'"
+          :height="metric.hasChart ? '140px' : '100px'"
+        >
+          <div>
+            <h6>{{ metric.title }}</h6>
+            <p>{{ metric.value }}</p>
+          </div>
+        </widget-card>
+      </div>
+    </section>
   </div>
 </template>
 
