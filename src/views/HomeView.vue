@@ -86,9 +86,9 @@ const metrics = ref([
     <section class="widget-section">
       <div class="widget-row">
         <div class="metrics-widget">
-          <widget-card v-for="metric in metrics" :key="metric.title" width="158px" height="100px">
+          <widget-card v-for="metric in metrics" :key="metric.title" width="128px" height="80px">
             <div>
-              <h6>{{ metric.title }}</h6>
+              <div>{{ metric.title }}</div>
               <p>{{ metric.value }}</p>
             </div>
           </widget-card>
@@ -110,18 +110,18 @@ const metrics = ref([
     --v-select-width: 100%;
   }
   display: flex;
-  gap: 20px;
+  gap: 16rpx;
   width: 100%;
   margin-bottom: 24px;
 }
 .widget-section {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
+  gap: 16px;
   .widget-row {
     display: flex;
     width: 100%;
-    gap: 20px;
+    gap: 16px;
   }
   .chart {
     width: 100%;
@@ -129,9 +129,9 @@ const metrics = ref([
   .metrics-widget {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 140px);
+    grid-template-rows: repeat(2, 144px);
     height: 100%;
-    gap: 20px;
+    gap: 16px;
   }
 }
 </style>

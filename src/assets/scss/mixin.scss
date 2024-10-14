@@ -1,0 +1,35 @@
+// RESPONSIVE BREAKPOINTS
+/**
+  * USAGE
+  * @include sm {
+  *   // your styles here
+  * }
+  */
+$breakpoints: (
+  sm: --breakpoint-sm,
+  md: --breakpoint-md,
+  lg: --breakpoint-lg,
+  xl: --breakpoint-xl
+);
+
+@mixin media($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @include media(sm);
+}
+
+@mixin md {
+  @include media(md);
+}
+
+@mixin lg {
+  @include media(lg);
+}
+
+@mixin xl {
+  @include media(xl);
+}
